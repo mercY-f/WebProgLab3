@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Минималистичная Мордочка Котика</title>
+    <style>
+        /* Общие стили для центрирования */
+        body {
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Контейнер для мордочки */
+        .cat-face {
+            position: relative;
+            width: 280px;
+            height: 260px;
+            background: transparent;
+            border: 3px solid transparent;
+            border-radius: 50% 50% 40% 40% / 60% 60% 45% 45%;
+        }
+
+        /* Уши */
+        .ear {
+            position: absolute;
+            top: -40px;
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 80px solid #ffffff;
+            z-index: -1;
+            border-bottom-left-radius: 40px 60px;
+            border-bottom-right-radius: 40px 60px;
+        }
+
+        .ear.left {
+            left: 20px;
+            transform: rotate(-25deg);
+        }
+
+        .ear.right {
+            right: 20px;
+            transform: rotate(25deg);
+        }
+
+        /* Внутренняя часть уха */
+        .ear::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -38px;
+            width: 0;
+            height: 0;
+            border-left: 38px solid transparent;
+            border-right: 38px solid transparent;
+            border-bottom: 60px solid #cccccc;
+            border-bottom-left-radius: 30px 45px;
+            border-bottom-right-radius: 30px 45px;
+        }
+
+        /* Глаза (контейнер) */
+        .eyes {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 60px;
+        }
+
+        /* Сам глаз */
+        .eye {
+            width: 55px;
+            height: 65px;
+            background: #ffffff;
+            border: 3px solid #333;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden; 
+            animation: blink 5s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        /* Зрачок */
+        .pupil {
+            width: 18px;
+            height: 40px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            animation: look-around 5s infinite ease-in-out;
+            overflow: hidden; 
+        }
+
+        .pupil::before {
+            content: '';
+            position: absolute;
+            top: 5px; /* Смещаем вверх */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px; /* Ширина блеска */
+            height: 15px; /* Высота блеска */
+            background: #ffffff;
+            border-radius: 50%; /* Овальная форма */
+            box-shadow: 2px 8px 0 -2px #ffffff; /* Второй, меньший блеск, смещенный вправо */
+        }
+        
+        /* Нос */
+        .nose {
+            position: absolute;
+            top: 155px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-top: 18px solid #ffffff;
+            border-radius: 4px;
+        }
+
+        /* Рот */
+        .mouth-wrapper {
+            position: absolute;
+            top: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 35px;
+            overflow: hidden;
+        }
+
+        .mouth-part {
+            position: absolute;
+            width: 30px;
+            height: 25px;
+            border-bottom: 3px solid #ffffff;
+            border-radius: 0 0 50% 50%;
+            animation: meow 3s infinite ease-in-out;
+        }
+
+        .mouth-part.left {
+            left: 0;
+            border-right: 3px solid #ffffff;
+            transform-origin: top right;
+        }
+
+        .mouth-part.right {
+            right: 0;
+            border-left: 3px solid #ffffff;
+            transform-origin: top left;
+        }
+
+
+
+        /* 1. Анимация моргания */
+        @keyframes blink {
+            0%, 93%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.05); }
+            96% { transform: scaleY(0.1); }
+            97% { transform: scaleY(1); }
+        }
+
+        /* 2. Анимация взгляда по сторонам */
+        @keyframes look-around {
+            0%, 20% { transform: translate(-50%, -50%); }
+            30% { transform: translate(-100%, -50%); }
+            40%, 55% { transform: translate(-100%, -50%); }
+            65% { transform: translate(0%, -50%); }
+            75%, 85% { transform: translate(0%, -50%); }
+            95%, 100% { transform: translate(-50%, -50%); }
+        }
+
+        /* 3. Анимация рта (мяуканье) */
+        @keyframes meow {
+            0%, 60%, 100% {
+                height: 25px;
+                border-radius: 0 0 50% 50%;
+            }
+            75% {
+                height: 30px;
+                border-radius: 0 0 70% 70%;
+            }
+            85% {
+                height: 25px;
+                border-radius: 0 0 50% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cat-face">
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+
+        <div class="eyes">
+            <div class="eye">
+                <div class="pupil"></div>
+            </div>
+            <div class="eye">
+                <div class="pupil"></div>
+            </div>
+        </div>
+
+        <div class="nose"></div>
+
+        <div class="mouth-wrapper">
+            <div class="mouth-part left"></div>
+            <div class="mouth-part right"></div>
+        </div>
+    </div>
+
+</body>
+</html>
